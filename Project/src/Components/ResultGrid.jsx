@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading, setError, setResults } from '../redux/features/searchSlice'
 import { fetchPhotos, fetchGif, fetchVideos } from '../Api/mediaApi'
@@ -26,19 +26,18 @@ const ResultGrid = () => {
                     let response = await fetchPhotos(query)
                     data = response.results.map((item) => ({
                         id: item.id,
-                        type: 'photos',
+                        type: 'photo',
                         title: item.alt_description,
                         thumbnail: item.urls.small,
-                        src: item.urls.big,
-                        url: item.links.html,
-
+                        src: item.urls.full,
+                        url:item.links.html
                     })) || []
                 }
                 if (activeTab == 'videos') {
                     let response = await fetchVideos(query)
                     data = response.videos.map((item) => ({
                         id: item.id,
-                        type: 'videos',
+                        type: 'video',
                         title: item.user.name || 'video',
                         thumbnail: item.image,
                         src: item.video_files[0].link,
@@ -75,7 +74,7 @@ const ResultGrid = () => {
 
     return (
         
-        <div className='flex justify-between w-full flex-wrap gap-6 overflow-auto px-10'>
+        <div className='flex justify-between w-full  flex-wrap gap-6 overflow-auto px-10'>
             {results.map((item, idx) => {
                 return <div key={idx}>
                     <ResultCard item={item} />

@@ -1,22 +1,17 @@
-    import { useDispatch } from 'react-redux'
-    import { addCollection, addToast } from '../redux/features/collectionSLice'
+import { useDispatch } from 'react-redux'
+import { removeCollection, removeToast } from '../redux/features/collectionSLice'
 
-    const ResultCard = ({ item }) => {
+const CollectionCard = ({item}) => {
 
-        const dispatch=useDispatch()
+    const dispatch=useDispatch()
 
-        const addToCollection=(item)=>{
-            console.log(item);
-            
-            dispatch(addCollection(item))
-            dispatch(addToast())
-            console.log("outer layer complete");
-            
-        }
-        
+    const removeAllCollection=(item)=>{
+        dispatch(removeCollection(item))
+        dispatch(removeToast())
+    }
 
-        return (
-            <div className='w-[18vw]  relative h-80 bg-white rounded-xl overflow-hidden'>
+    return (
+        <div className='w-[18vw]  relative h-80 bg-white rounded-xl overflow-hidden'>
 
                 <a target='_blank' href={item.url} className='h-full'>
                     {item.type == 'photo' ? <img className='w-full h-full object-cover object-center' src={item.src} alt="" /> : ''}
@@ -28,14 +23,14 @@
 
                     <button
                     onClick={()=>{
-                        addToCollection(item)
+                        removeAllCollection(item)
                     }}
-                        className='bg-indigo-600 active:scale-95 text-white rounded px-3 py-1 cursor-pointer font-medium text-2xl'
-                    >Save</button>
+                        className='bg-red-500 active:scale-95 text-white rounded px-3 py-1 cursor-pointer font-medium text-xl'
+                    >Remove</button>
                 </div>
 
             </div>
-        )
-    }
+    )
+}
 
-    export default ResultCard
+export default CollectionCard
